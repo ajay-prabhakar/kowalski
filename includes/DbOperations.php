@@ -75,8 +75,7 @@
             $stmt = $this->con->prepare("SELECT id , email,name,school FROM users WHERE email = ?");
             $stmt->bindParam("s", $email);
             $stmt->execute(); 
-            $stmt->bind_result($id, $email, $name, $school);
-            $stmt->fetch(); 
+            $stmt->fetchColumn($id, $email, $name, $school);
             $user = array(); 
             $user['id'] = $id; 
             $user['email']=$email; 

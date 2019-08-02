@@ -88,7 +88,6 @@
             $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ?");
             $stmt->bindParam("s", $email);
             $stmt->execute(); 
-            $stmt->store_result(); 
             return $stmt->num_rows > 0;  
         }
 

@@ -99,7 +99,7 @@
         public function getAllUsers(){
             $stmt = $this->con->prepare("SELECT id, email, name, school FROM users;");
             $stmt->execute(); 
-            $stmt->bind_result($id, $email, $name, $school);
+            $stmt->bindResult($id, $email, $name, $school);
             $users = array(); 
             while($stmt->fetch()){ 
                 $user = array(); 

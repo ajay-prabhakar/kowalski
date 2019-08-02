@@ -66,8 +66,7 @@
             $stmt = $this->con->prepare("SELECT password FROM users WHERE email = ?");
             $stmt->bindParam("s", $email);
             $stmt->execute(); 
-            $stmt->bind_result($password);
-            $stmt->fetch(); 
+            $stmt->fetchColumn($password); 
             return $password; 
         }
 

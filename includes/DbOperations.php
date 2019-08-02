@@ -9,7 +9,7 @@
         public function createUser($email, $password, $name, $school){
            if(!$this->isEmailExist($email)){
                 $stmt = $this->con->prepare("INSERT INTO users (email, password, name, school) VALUES (?, ?, ?, ?)");
-                $stmt->bind_param("ssss", $email, $password, $name, $school);
+                $stmt->bindParam("ssss", $email, $password, $name, $school);
                 if($stmt->execute()){   
                     return USER_CREATED; 
                 }else{
@@ -27,7 +27,7 @@
                 
                 $hash_password = password_hash($newpassword, PASSWORD_DEFAULT);
                 $stmt = $this->con->prepare("UPDATE users SET password = ? WHERE email = ?");
-                $stmt->bind_param("ss",$hash_password, $email);
+                $stmt->bindParam("ss",$hash_password, $email);
                 if($stmt->execute())
                     return PASSWORD_CHANGED;
                 return PASSWORD_NOT_CHANGED;
@@ -41,7 +41,7 @@
 
         public function updateUser($email, $name, $school, $id){
             $stmt = $this->con->prepare("UPDATE users SET email = ?, name = ?, school = ? WHERE id = ?");
-            $stmt->bind_param("sssi", $email, $name, $school, $id);
+            $stmt->bindParam("sssi", $email, $name, $school, $id);
             if($stmt->execute())
                 return true; 
             return false; 
@@ -64,7 +64,7 @@
         
         private function getUsersPasswordByEmail($email){
             $stmt = $this->con->prepare("SELECT password FROM users WHERE email = ?");
-            $stmt->bind_param("s", $email);
+            $stmt->bindParam("s", $email);
             $stmt->execute(); 
             $stmt->bind_result($password);
             $stmt->fetch(); 
@@ -73,7 +73,7 @@
 
         public function getUserByEmail($email){
             $stmt = $this->con->prepare("SELECT id , email,name,school FROM users WHERE email = ?");
-            $stmt->bind_param("s", $email);
+            $stmt->bindParam("s", $email);
             $stmt->execute(); 
             $stmt->bind_result($id, $email, $name, $school);
             $stmt->fetch(); 
@@ -86,7 +86,7 @@
         }
         private function isEmailExist($email){
             $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ?");
-            $stmt->bind_param("s", $email);
+            $stmt->bindParam("s", $email);
             $stmt->execute(); 
             $stmt->store_result(); 
             return $stmt->num_rows > 0;  

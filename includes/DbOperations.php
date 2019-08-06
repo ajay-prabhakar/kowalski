@@ -94,9 +94,8 @@
         public function getAllUsers(){
             $stmt = $this->con->prepare("SELECT id, email, name, school FROM users;");
             $stmt->execute(); 
-            $stmt->bind_result($id, $email, $name, $school);
             $users = array(); 
-            while($stmt->fetch()){ 
+            while($stmt->fetchColumn($id, $email, $name, $school);){ 
                 $user = array(); 
                 $user['id'] = $id; 
                 $user['email']=$email; 

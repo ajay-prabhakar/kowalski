@@ -67,7 +67,6 @@
             $stmt->bindParam("s", $email);
             $stmt->execute(); 
             $stmt->fetchColumn($password);
-            $stmt->fetch();
             return $password; 
         }
 
@@ -76,7 +75,6 @@
             $stmt->bindParam("s", $email);
             $stmt->execute(); 
             $stmt->fetchColumn($id, $email, $name, $school);
-            $stmt->fetch();
             $user = array(); 
             $user['id'] = $id; 
             $user['email']=$email; 
@@ -99,7 +97,6 @@
             $stmt = $this->con->prepare("SELECT id, email, name, school FROM users;");
             $stmt->execute(); 
             $stmt->fetchColumn($id, $email, $name, $school);
-            $stmt->fetch();
             $users = array(); 
             while($stmt->fetch()){ 
                 $user = array(); 

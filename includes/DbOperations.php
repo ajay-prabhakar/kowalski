@@ -96,7 +96,7 @@
             $stmt->fetchColumn($id, $email, $name, $school);
             $stmt->execute(); 
             $users = array(); 
-            while($stmt->fetchColumn($id, $email, $name, $school)){ 
+            while($stmt->fetch()){ 
                 $user = array(); 
                 $user['id'] = $id; 
                 $user['email']=$email; 

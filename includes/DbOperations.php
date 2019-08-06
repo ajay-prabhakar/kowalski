@@ -20,23 +20,6 @@
         }
 
 
-        public function updatePassword($currentpassword, $newpassword, $email){
-            $hashed_password = $this->getUsersPasswordByEmail($email);
-            
-            if(password_verify($currentpassword, $hashed_password)){
-                
-                $hash_password = password_hash($newpassword, PASSWORD_DEFAULT);
-                $stmt = $this->con->prepare("UPDATE users SET password = ? WHERE email = ?");
-                $stmt->bindParam("ss",$hash_password, $email);
-                if($stmt->execute())
-                    return PASSWORD_CHANGED;
-                return PASSWORD_NOT_CHANGED;
-            }else{
-                return PASSWORD_DO_NOT_MATCH; 
-            }
-        }
-
-
 
 
         public function updateUser($email, $name, $school, $id){
@@ -86,17 +69,32 @@
             $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ?");
             $stmt->bindParam("s", $email);
             $stmt->execute(); 
+            $stmt->store_result(); 
             return $stmt->num_rows > 0;  
         }
 
-        
+        public function updatePassword($currentpassword, $newpassword, $email){
+            $hashed_password = $this->getUsersPasswordByEmail($email);
+            
+            if(password_verify($currentpassword, $hashed_password)){
+                
+                $hash_password = password_hash($newpassword, PASSWORD_DEFAULT);
+                $stmt = $this->con->prepare("UPDATE users SET password = ? WHERE email = ?");
+                $stmt->bindParam("ss",$hash_password, $email);
+                if($stmt->execute())
+                    return PASSWORD_CHANGED;
+                return PASSWORD_NOT_CHANGED;
+            }else{
+                return PASSWORD_DO_NOT_MATCH; 
+            }
+        }
 
 
 
         public function getAllUsers(){
             $stmt = $this->con->prepare("SELECT id, email, name, school FROM users;");
             $stmt->execute(); 
-            $stmt->fetchColumn($id, $email, $name, $school);
+            $stmt->bind_result($id, $email, $name, $school);
             $users = array(); 
             while($stmt->fetch()){ 
                 $user = array(); 

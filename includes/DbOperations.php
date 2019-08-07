@@ -68,7 +68,8 @@
         private function isEmailExist($email){
             $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ?");
             $stmt->bindParam("s", $email);
-            $stmt->execute();  
+            $stmt->execute();
+            $stmt->store_result(); 
             return $stmt->num_rows > 0;  
         }
 
@@ -91,7 +92,7 @@
 
 
         public function getAllUsers(){
-            $stmt = $this->con->prepare("SELECT id, email, name, school FROM users;");
+                $stmt = $this->con->prepare("SELECT id, email, name, school FROM users;");
             // $stmt->fetchColumn($id, $email, $name, $school);
             $stmt->execute(); 
             $users = $stmt->fetchall(PDO::FETCH_ASSOC);             

@@ -69,7 +69,7 @@
             $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ?");
             $stmt->bindParam("s", $email);
             $stmt->execute();
-            $stmt->fetchall(PDO::FETCH_ASSOC) 
+            $stmt->fetchall(PDO::FETCH_ASSOC);
             return $stmt->num_rows > 0;  
         }
 

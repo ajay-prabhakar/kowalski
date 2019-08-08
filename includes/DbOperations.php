@@ -7,7 +7,7 @@
             $this->con = $db->connect(); 
         }
         public function createUser($email, $password, $name, $school){
-           if(!$this->isEmailExist($email)){
+          // if(!$this->isEmailExist($email)){
                 $stmt = $this->con->prepare("INSERT INTO users (email, password, name, school) VALUES (?, ?, ?, ?)");
                 $stmt->bindParam("ssss", $email, $password, $name, $school);
                 if($stmt->execute()){   
@@ -15,8 +15,8 @@
                 }else{
                     return USER_FAILURE;
                 }
-           } 
-           return USER_EXISTS; 
+           // } 
+           // return USER_EXISTS; 
         }
 
 

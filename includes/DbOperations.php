@@ -69,8 +69,8 @@
             $stmt = $this->con->prepare("SELECT id FROM users WHERE email = ?");
             $stmt->bindParam("s", $email);
             $stmt->execute();
-            $stmt->fetchall(PDO::FETCH_ASSOC);
-            return $stmt->num_rows > 0;  
+            $num=$stmt->fetchall(PDO::FETCH_ASSOC);
+            return $num->num_rows > 0;  
         }
 
         public function updatePassword($currentpassword, $newpassword, $email){
